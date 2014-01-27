@@ -1,21 +1,6 @@
-#!/usr/bin/env ruby
-
-require 'set'
-
-# Our test cases will always use the same dictionary file (with SHA1
-# 6b898d7c48630be05b72b3ae07c5be6617f90d8e). Running `test/harness`
-# will automatically download this dictionary for you if you don't
-# have it already.
-
-path = ARGV.length > 0 ? ARGV[0] : '/usr/share/dict/words'
-entries = File.read(path).split("\n").to_set
-
-contents = $stdin.read
-output = contents.gsub(/[^ \n]+/) do |word|
-  if entries.include?(word.downcase)
-    word
-  else
-    "<#{word}>"
-  end
-end
-print output
+#!/usr/bin/env python
+import sys
+d = set(open(sys.argv[1]).read().split('\n'))
+import re
+contents = sys.stdin.read()
+sys.stdout.write(re.sub(r'[^ \n]+', lambda m: '<'+m.group()+'>' if m.group().lower() not in d else m.group(), contents))
