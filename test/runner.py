@@ -44,4 +44,6 @@ class Runner(test_framework.AbstractRunner):
             msg = ("Test case failed. Your time: %(your_time)f. "
                    "Benchmark time: %(benchmark_time)f")
             util.logger.error(msg, {"your_time": your_time, "benchmark_time": benchmark_time})
+            open('/tmp/expout', 'w').write(benchmark_output)
+            open('/tmp/actout', 'w').write(your_output)
             self.log_diff(benchmark_output, your_output)

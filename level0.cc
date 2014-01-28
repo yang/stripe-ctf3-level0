@@ -57,12 +57,17 @@ int main(int argc, char **argv) {
   //}
   //cout << endl;
 
-  size_t incount;
+  size_t incount = 0;
   if (argc > 2)
     incount = read(open(argv[2], O_RDONLY), inbuf, INLEN);
-  else
-    incount = read(STDIN_FILENO, inbuf, INLEN);
+  else {
+    size_t inread;
+    while ((inread = read(STDIN_FILENO, inbuf + incount, INLEN - incount)) != 0) {
+      incount += inread;
+    }
+  }
   inbuf[incount] = '\0';
+  //cout << incount << endl;
 
   FILE *mphf = fopen("test/data/lower.txt.mph", "r");
   cmph_t *hasher = cmph_load(mphf);

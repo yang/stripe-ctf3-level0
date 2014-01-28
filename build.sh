@@ -15,5 +15,5 @@ pwd
 ls
 xxd -i test/data/lower.txt > test/data/lower.h
 xxd -i test/data/packed > test/data/packed.h
-g++ -O3 -static -std=c++0x -Wall -g3 -o level0 level0.cc -L. -lcmph
+g++ -O3 -static -std=c++0x -Wall -o level0 level0.cc -L. -lcmph
 test/harness
