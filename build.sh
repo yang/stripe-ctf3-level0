@@ -8,6 +8,6 @@ free -m
 top -b -n1
 ps auxf
 
-sudo aptitude install libcmph-dev libcmph0
+#sudo aptitude install libcmph-dev libcmph0
 unxz -k test/data/*.xz
 g++ -std=c++0x -Wall -g3 -o level0 level0.cc -lcmph
