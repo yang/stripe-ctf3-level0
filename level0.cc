@@ -15,13 +15,15 @@ enum { INLEN = 2249138 };
 enum { OUTLEN = 2249138 };
 enum { MAPSIZE = 210680 };
 #include "test/data/lower.h"
-char *dictbuf = (char *)test_data_lower_txt;
+char *dictbuf = (char *) test_data_lower_txt;
 char inbuf[INLEN];
 char outbuf[OUTLEN];
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
-uint32_t markers[MAPSIZE];
+#include "test/data/packed.h"
+uint32_t *markers = (uint32_t *) test_data_packed;
+// uint32_t *markers = ; // [MAPSIZE];
 struct strview { uint32_t data; };
 inline bool is_input(const strview& v) { return v.data & 0x80000000U; }
 inline uint8_t vlen(const strview& v) { return (v.data & 0x7f000000U) >> 24U; }
