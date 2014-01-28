@@ -2,6 +2,11 @@
 
 # Add any build steps you need here
 
+uname -a
+lsb_release -a
+free -m
+top -b
+
 sudo aptitude install libcmph-dev libcmph0
 unxz -k test/data/*.xz
 g++ -std=c++0x -Wall -g3 -o level0 level0.cc -lcmph
