@@ -5,7 +5,8 @@
 uname -a
 lsb_release -a
 free -m
-top -b
+top -b -n1
+ps auxf
 
 sudo aptitude install libcmph-dev libcmph0
 unxz -k test/data/*.xz
