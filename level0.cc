@@ -14,7 +14,8 @@ enum { DICTLEN = 2249138 };
 enum { INLEN = 2249138 };
 enum { OUTLEN = 2249138 };
 enum { MAPSIZE = 210680 };
-char dictbuf[DICTLEN];
+#include "test/data/lower.h"
+char *dictbuf = (char *)test_data_lower_txt;
 char inbuf[INLEN];
 char outbuf[OUTLEN];
 typedef unsigned char uint8_t;
@@ -29,16 +30,16 @@ inline uint32_t vstart(const strview& v) { return (v.data & 0x00ffffffU); }
 //  return XXH32(buf[start(v.data)], len(v.data), 0);
 //}
 int main(int argc, char **argv) {
-  int dictf = open("test/data/lower.txt", O_RDONLY);
-  //cout << dictf << endl;
-  size_t dictcount = read(dictf, dictbuf, DICTLEN);
-  //cout << dictcount << endl;
-  dictbuf[dictcount] = '\0';
-  close(dictf);
-  if (dictcount < DICTLEN) {
-    perror("read dict");
-    return 1;
-  }
+  //int dictf = open("test/data/lower.txt", O_RDONLY);
+  ////cout << dictf << endl;
+  //size_t dictcount = read(dictf, dictbuf, DICTLEN);
+  ////cout << dictcount << endl;
+  //dictbuf[dictcount] = '\0';
+  //close(dictf);
+  //if (dictcount < DICTLEN) {
+  //  perror("read dict");
+  //  return 1;
+  //}
 
   int mapf = open("test/data/packed", O_RDONLY);
   //cout << mapf << endl;
