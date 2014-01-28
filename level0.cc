@@ -43,15 +43,15 @@ int main(int argc, char **argv) {
   //  return 1;
   //}
 
-  int mapf = open("test/data/packed", O_RDONLY);
-  //cout << mapf << endl;
-  size_t mapcount = read(mapf, markers, MAPSIZE * sizeof(uint32_t));
-  //cout << mapcount << endl;
-  close(mapf);
-  if (mapcount < MAPSIZE * sizeof(uint32_t)) {
-    perror("read map");
-    return 1;
-  }
+  //int mapf = open("test/data/packed", O_RDONLY);
+  ////cout << mapf << endl;
+  //size_t mapcount = read(mapf, markers, MAPSIZE * sizeof(uint32_t));
+  ////cout << mapcount << endl;
+  //close(mapf);
+  //if (mapcount < MAPSIZE * sizeof(uint32_t)) {
+  //  perror("read map");
+  //  return 1;
+  //}
   //for (int i = 0; i < 100; i++) {
   //  cout << (int) markers[i] << ' ';
   //}
