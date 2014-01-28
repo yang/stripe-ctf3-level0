@@ -12,9 +12,11 @@
 using namespace std;
 enum { DICTLEN = 2249138 };
 enum { INLEN = 2249138 };
+enum { OUTLEN = 2249138 };
 enum { MAPSIZE = 210680 };
 char dictbuf[DICTLEN];
 char inbuf[INLEN];
+char outbuf[OUTLEN];
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
@@ -63,6 +65,7 @@ int main(int argc, char **argv) {
   cmph_t *hasher = cmph_load(mphf);
   char *start = inbuf;
   char lowered[99];
+  char *outcur = outbuf;
   while (true) {
     char *end = strpbrk(start, " \n");
     bool stop = end == NULL;
@@ -78,17 +81,22 @@ int main(int argc, char **argv) {
     //cout << "query start " << (start - inbuf) << " len " << len << ": " << string(start, len) << endl;
     //cout << "match start " << vstart(v) << " len " << (int) vlen(v) << ": " << string(dictbuf + vstart(v), vlen(v)) << endl;
 
-    if (string(lowered, len) != string(dictbuf + vstart(v), vlen(v))) {
-      cout << "<" << string(start, len) << ">";
-    } else {
-      cout << string(start, len);
-    }
+    bool hit = len == vlen(v) && memcmp(lowered, dictbuf + vstart(v), len) == 0;
+    if (!hit) *outcur++ = '<';
+    memcpy(outcur, start, len);
+    outcur += len;
+    if (!hit) *outcur++ = '>';
     if (stop) {
       break;
     }
-    cout << string(start + len, end + 1 - (start + len));
+    //size_t skip = end + 1 - (start + len);
+    //memcpy(outcur, end, skip);
+    *outcur++ = *end;
     start = end + 1;
   }
+  //*outcur++ = '\0';
+  size_t outlen = outcur - outbuf;
+  write(STDOUT_FILENO, outbuf, outlen);
   cmph_destroy(hasher);
 
   return 0;
